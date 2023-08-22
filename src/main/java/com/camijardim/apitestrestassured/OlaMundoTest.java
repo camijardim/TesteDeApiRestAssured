@@ -31,6 +31,7 @@ public class OlaMundoTest {
 
     @Test
     public void devoConhecerOutrasFormasRestAssured() {
+        // para fazer o import static = alt + enter
         // antes de por * no static import - Response response = RestAssured.request(Method.GET, "https://restapi.wcaquino.me/ola");
         Response response = request(Method.GET, "https://restapi.wcaquino.me/ola");
         ValidatableResponse validacao = response.then();
@@ -71,6 +72,19 @@ public class OlaMundoTest {
         assertThat("Maria", not("João"));
         assertThat("Joaquina", anyOf(is("Maria"), is("Joaquina")));
         assertThat("Joaquina", allOf(startsWith("Joa"), endsWith("ina"), containsString("qui")));
+    }
+
+    @Test
+    public void devoValidarBody() {
+        given()
+                .when()
+                    .get("https://restapi.wcaquino.me/ola")
+                .then()
+                .statusCode(200)
+                .body(is("Ola Mundo!"))
+                .body(containsString("Mundo"))
+                .body(is(not(nullValue())));
+
 
     }
 
